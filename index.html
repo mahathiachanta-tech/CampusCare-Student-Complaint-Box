@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCare | Student Complaint Box</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>.modal[hidden] { display: none; }</style>
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+  <main id="authView" class="auth-shell">
+    <section class="auth-visual">
+      <div class="brand"><span class="brand-mark">C</span> CampusCare</div>
+      <div class="visual-copy">
+        <span class="eyebrow">YOUR VOICE MATTERS</span>
+        <h1>A better campus<br><em>starts with you.</em></h1>
+        <p>Share what's not working. Follow every update. Help make your college a better place for everyone.</p>
+        <div class="visual-stats"><div><strong>01</strong><span>Speak up</span></div><div><strong>02</strong><span>Track progress</span></div><div><strong>03</strong><span>See change</span></div></div>
+      </div>
+      <div class="visual-foot">STUDENT SUPPORT · CAMPUS COMMUNITY</div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="mobile-brand brand"><span class="brand-mark">C</span> CampusCare</div>
+        <span class="eyebrow">WELCOME TO CAMPUSCARE</span>
+        <h2 id="authTitle">Welcome back</h2><p class="muted" id="authSubtitle">Sign in to submit and track your complaints.</p>
+        <div class="tabs"><button class="tab active" id="loginTab">Sign in</button><button class="tab" id="registerTab">Create account</button></div>
+        <form id="authForm">
+          <div class="field" id="nameField" hidden><label for="name">Full name</label><input id="name" autocomplete="name" placeholder="Your full name"></div>
+          <div class="field"><label for="email">College email</label><input id="email" type="email" required autocomplete="email" placeholder="you@college.edu"></div>
+          <div class="field"><label for="password">Password</label><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters"></div>
+          <button class="btn primary full" id="authSubmit">Sign in <span>→</span></button>
+        </form>
+        <div class="demo-box"><strong>Admin demo access</strong><span>Email: admin@college.edu</span><span>Password: Admin@123</span></div>
+        <p class="tiny muted">Student accounts can be created using the Create account tab.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="appView" hidden>
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">C</span> CampusCare</div>
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-link active" id="navDashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-link" id="navComplaints"><span>▤</span> Complaints</button>
+      <button class="nav-link" id="navNew" data-student-only><span>＋</span> New complaint</button>
+      <div class="sidebar-bottom"><div class="profile"><div class="avatar" id="avatar">S</div><div><strong id="sideName">Student</strong><small id="sideRole">Student</small></div></div><button class="nav-link logout" id="logoutBtn"><span>↪</span> Sign out</button></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><div><span class="eyebrow" id="pageEyebrow">STUDENT PORTAL</span><h2 id="pageTitle">Dashboard</h2></div><div class="top-user"><span id="topName">Student</span><div class="avatar small" id="topAvatar">S</div></div></header>
+      <section class="content">
+        <div id="studentDashboard">
+          <div class="welcome-row"><div><h3 id="welcomeTitle">Hello there 👋</h3><p class="muted">Here’s the latest on the issues you’ve reported.</p></div><button class="btn primary" id="newComplaintBtn">＋ Submit a complaint</button></div>
+          <div class="stat-grid student-stats">
+            <article class="stat-card"><span class="stat-icon purple">▤</span><small>Total submitted</small><strong id="sTotal">0</strong></article>
+            <article class="stat-card"><span class="stat-icon amber">◷</span><small>Pending</small><strong id="sPending">0</strong></article>
+            <article class="stat-card"><span class="stat-icon blue">↻</span><small>In progress</small><strong id="sProgress">0</strong></article>
+            <article class="stat-card"><span class="stat-icon green">✓</span><small>Resolved</small><strong id="sResolved">0</strong></article>
+          </div>
+        </div>
+        <div id="studentComplaints" hidden>
+          <div class="section-heading"><div><h3>Your complaints</h3><p class="muted">Track the status of every complaint you submitted.</p></div><div class="filters"><input id="studentSearch" placeholder="Search complaints…"><select id="studentStatus"><option value="">All statuses</option><option>Pending</option><option>In Progress</option><option>Resolved</option></select></div></div>
+          <div id="studentList" class="complaint-list"></div>
+        </div>
+        <div id="adminDashboard" hidden>
+          <div class="welcome-row"><div><h3>Admin overview</h3><p class="muted">Review student concerns and keep campus improvements moving.</p></div><span class="admin-chip">ADMINISTRATOR</span></div>
+          <div class="stat-grid">
+            <article class="stat-card"><span class="stat-icon purple">▤</span><small>Total complaints</small><strong id="aTotal">0</strong></article>
+            <article class="stat-card"><span class="stat-icon amber">◷</span><small>Pending</small><strong id="aPending">0</strong></article>
+            <article class="stat-card"><span class="stat-icon blue">↻</span><small>In progress</small><strong id="aProgress">0</strong></article>
+            <article class="stat-card"><span class="stat-icon green">✓</span><small>Resolved</small><strong id="aResolved">0</strong></article>
+          </div>
+        </div>
+        <div id="adminComplaints" hidden>
+          <div class="section-heading"><div><h3>All complaints</h3><p class="muted">Search, filter and update student complaints.</p></div><div class="filters"><input id="adminSearch" placeholder="Search title or student…"><select id="adminStatus"><option value="">All statuses</option><option>Pending</option><option>In Progress</option><option>Resolved</option></select><select id="adminPriority"><option value="">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select></div></div>
+          <div id="adminList" class="complaint-list"></div>
+        </div>
+        <section id="formView" class="form-card" hidden>
+          <button class="back-link" id="backBtn">← Back to dashboard</button>
+          <span class="eyebrow">STUDENT SUPPORT</span><h3>Submit a complaint</h3><p class="muted">Give us the details so the right team can look into it.</p>
+          <form id="complaintForm">
+            <div class="field"><label for="complaintTitle">Complaint title</label><input id="complaintTitle" required minlength="4" maxlength="100" placeholder="e.g. Projector not working in Room 204"></div>
+            <div class="field"><label for="category">Category</label><select id="category" required><option value="">Select a category</option><option>Classroom</option><option>Hostel</option><option>Library</option><option>Canteen</option><option>Transport</option><option>Cleanliness</option><option>Electrical</option><option>Other</option></select></div>
+            <div class="field"><label for="description">Description</label><textarea id="description" required minlength="10" maxlength="1500" rows="5" placeholder="Explain the issue, where it happened and when…"></textarea><small class="field-hint">Please provide at least 10 characters.</small></div>
+            <div class="field"><label>Priority level</label><p class="field-hint">Choose based on urgency. The administrator can review and adjust it.</p><div class="priority-options"><label class="priority-choice"><input type="radio" name="priority" value="Low"><span><b class="dot low"></b><strong>Low</strong><small>Minor inconvenience</small></span></label><label class="priority-choice selected"><input type="radio" name="priority" value="Medium" checked><span><b class="dot medium"></b><strong>Medium</strong><small>Needs attention soon</small></span></label><label class="priority-choice"><input type="radio" name="priority" value="High"><span><b class="dot high"></b><strong>High</strong><small>Urgent or safety issue</small></span></label></div></div>
+            <div class="form-actions"><button type="button" class="btn secondary" id="cancelForm">Cancel</button><button class="btn primary" type="submit">Submit complaint →</button></div>
+          </form>
+        </section>
+      </section>
+      <footer>CampusCare <span>·</span> Making campus better, together.</footer>
+    </main>
+  </div>
+  <div id="detailModal" class="modal" hidden><div class="modal-backdrop" id="modalBackdrop"></div><section class="modal-card"><button class="modal-close" id="modalClose">×</button><div id="modalContent"></div></section></div>
+  <script src="app.js"></script>
+</body></html>
